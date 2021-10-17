@@ -20,7 +20,7 @@ export class IntrumController {
     const stock = stockTransformer.get(webHook).format();
 
     const merge = webHook.snapshot.merge;
-    const message = this.notify.stock(stock, merge);
+    const message = this.notify.newStock(stock, merge);
 
     return { message: stock };
   }

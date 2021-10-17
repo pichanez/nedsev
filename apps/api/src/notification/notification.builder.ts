@@ -7,7 +7,11 @@ class StockMessage {
   public content: string = '';
 }
 
-export class StockMessageBuilder implements IStockNotificationBuilder {
+interface m {
+  name: string;
+  surname: string;
+}
+export class StockMessageBuilder {
   private readonly stock: Stock;
   private message: StockMessage;
 
@@ -49,7 +53,7 @@ export class StockMessageBuilder implements IStockNotificationBuilder {
     }
   }
 
-  public produceManager(manager: object): void {
+  public produceManager(manager: m): void {
     this.message.content += `Ответственный: ${manager.name} ${manager.surname}`;
   }
 

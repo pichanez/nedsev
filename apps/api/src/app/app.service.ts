@@ -2,7 +2,6 @@ import { HttpService, Injectable } from '@nestjs/common';
 import {
   EventTypes,
   FlatCategories,
-  flatProperties,
   FlatStatuses,
   IFlatStock,
   PREPAYMENT_TITLE,
@@ -46,11 +45,6 @@ export class Stock {
     this.dryStock.snapshot.event = this.dryStock.event;
 
     this.stock = this.pickProperties(webHookProperties, snapshot);
-    this.stock.properties = this.pickProperties(
-      flatProperties,
-      snapshot.extproperty,
-      true
-    );
   }
 
   protected getCategory() {
@@ -63,16 +57,6 @@ export class Stock {
       if (studio) return STUDIO_CATEGORY_NAME;
       return `${rooms}${FLAT_CATEGORY_NAME}`;
     }
-  }
-
-  protected getTitle() {
-    let manager: object;
-    this.intrum.getManager(2).subscribe((response) => {
-      manager = response.data[2];
-    });
-
-    const { house, street } = this.stock.properties;
-    return `${this.getOperationType()} ${this.getCategory()} по адресу ${street}, ${house} ${manager}`;
   }
 
   protected getOperationType(): string {
@@ -110,37 +94,23 @@ class Flat extends Stock {
     return `${square} м²`;
   }
 
-  protected getShortInfo() {
-    const {
-      subname,
-      square,
-      floor,
-      floorsTotal,
-      category,
-      livingSpace,
-    } = this.stock.properties;
-    return `⚙️ ${subname} • ${parseFloat(
-      category == FlatCategories.ROOM ? livingSpace : square
-    )} м² • ${floor}/${floorsTotal} этаж`;
-  }
-
   public getMessage() {
     const { ACTIVE, PREPAYMENT } = FlatStatuses;
     const { merge, event } = this.stock;
 
     // TODO: Добавить проверку на publish
-    if (event == EventTypes.CREATE) {
-      return this.getNewMessage();
-    }
+    // if (event == EventTypes.CREATE) {
+    //   return this.getNewMessage();
+    // }
 
-    if (flatProperties.status in merge) {
-      switch (this.stock.properties.status) {
-        case ACTIVE:
-          return this.getNewMessage();
-        case PREPAYMENT:
-          return this.getPrepaymentMessage();
-      }
-    } else return;
+    // if (flatProperties.status in merge) {
+    //   switch (this.stock.properties.status) {
+    //     case ACTIVE:
+    //       return this.getNewMessage();
+    //     case PREPAYMENT:
+    //       return this.getPrepaymentMessage();
+    //   }
+    // } else return;
   }
 
   private getPrepaymentMessage() {
@@ -148,18 +118,18 @@ class Flat extends Stock {
     return `${PREPAYMENT_TITLE} по адресу ${street}, ${house}`;
   }
 
-  private getNewMessage() {
-    const { price } = this.stock.properties;
-
-    return `${this.getTitle()}
-
-${this.getShortInfo()}
-
-💵 Стоимость: ${price.toLocaleString('ru-RU')} ₽
-
-Номер объекта: ${this.stock.id}
-    `;
-  }
+  //   private getNewMessage() {
+  //     const { price } = this.stock.properties;
+  //
+  //     return `${this.getTitle()}
+  //
+  // ${this.getShortInfo()}
+  //
+  // 💵 Стоимость: ${price.toLocaleString('ru-RU')} ₽
+  //
+  // Номер объекта: ${this.stock.id}
+  //     `;
+  //   }
 }
 
 @Injectable()
