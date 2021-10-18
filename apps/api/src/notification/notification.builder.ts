@@ -59,10 +59,7 @@ export class StockMessageBuilder {
 
   private produceSaleTitle(): void {
     this.message.content +=
-      '✅ В продаже ' +
-      this.formatter.getCategory() +
-      this.getAddress() +
-      '\n\n';
+      '✅ В продаже ' + this.formatter.getCategory() + this.getAddress();
   }
 
   public produceSalePrepaymentTitle(): void {
@@ -81,7 +78,7 @@ export class StockMessageBuilder {
 
   private produceRentTitle(): void {
     this.message.content +=
-      '📮 Сдаётся ' + this.formatter.getCategory() + this.getAddress() + '\n\n';
+      '📮 Сдаётся ' + this.formatter.getCategory() + this.getAddress();
   }
 
   private getAddress(): string {
@@ -101,6 +98,6 @@ export class StockMessageBuilder {
 
   public produceShortInfo(): void {
     this.message.content +=
-      '⚙️ ' + this.formatter.getShortInfo().join(' • ') + '\n\n';
+      '\n\n⚙️ ' + this.formatter.getShortInfo().join(' • ') + '\n\n';
   }
 }
