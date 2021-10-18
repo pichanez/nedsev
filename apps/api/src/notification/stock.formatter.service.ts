@@ -41,7 +41,7 @@ class StockFormatter implements IBaseStockFormatter {
 
 class RoomFormatter extends StockFormatter implements IStockFormatter {
   public getCategory(): string {
-    return 'комната';
+    return 'Комната';
   }
 
   public getShortInfo(): Array<number | string> {
@@ -55,7 +55,7 @@ class RoomFormatter extends StockFormatter implements IStockFormatter {
 
 class FlatFormatter extends StockFormatter implements IStockFormatter {
   public getCategory(): string {
-    if (this.properties.studio) return 'студия';
+    if (this.properties.studio) return 'Студия';
     return `${this.properties.rooms}-комн. квартира`;
   }
 
@@ -66,7 +66,7 @@ class FlatFormatter extends StockFormatter implements IStockFormatter {
 
 class NewFlatFormatter extends FlatFormatter implements IStockFormatter {
   public getCategory(): string {
-    if (this.properties.studio) return 'студия в новостройке';
+    if (this.properties.studio) return 'Студия в новостройке';
     return `${this.properties.rooms}-комн. квартира в новостройке`;
   }
 
