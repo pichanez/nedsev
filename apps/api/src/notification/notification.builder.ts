@@ -64,7 +64,7 @@ export class StockMessageBuilder {
 
   public produceSalePrepaymentTitle(): void {
     this.message.content +=
-      '⚠️ Закрепился покупатель за объектом' +
+      '⚠️ Закрепился покупатель за объектом ' +
       '«' +
       this.formatter.getCategory() +
       this.getAddress() +
