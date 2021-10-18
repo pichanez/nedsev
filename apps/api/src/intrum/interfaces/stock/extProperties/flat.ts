@@ -1,4 +1,5 @@
 export interface FlatProperty {
+  status: string;
   rooms: number;
   studio: number;
   square: number;

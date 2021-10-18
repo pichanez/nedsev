@@ -5,6 +5,11 @@ import { StockMessageBuilder } from './notification.builder';
 import { IntrumService } from '../intrum/intrum.service';
 import { WebHookMerge } from '../intrum/interfaces/webhook/intrum.webhook.interface';
 
+enum WebHookType {
+  NEW,
+  PREPAYMENT,
+}
+
 @Injectable()
 export class NotificationService {
   manager: object;
@@ -16,10 +21,13 @@ export class NotificationService {
     private intrum: IntrumService
   ) {}
 
-  newStock(stock: Stock, merge: WebHookMerge[]): string {
+  stock(stock: Stock, type: WebHookType): string {
     const builder = new StockMessageBuilder(stock);
 
-    builder.produceNewTitle();
+    if (type == WebHookType.NEW) {
+      builder.produceNewTitle();
+    } else builder.producePrepaymentTitle();
+
     builder.produceShortInfo();
     builder.producePrice();
 

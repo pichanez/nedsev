@@ -17,7 +17,7 @@ export class BaseWebHookRequest {
   object_sub_id: number;
 }
 
-enum EventType {
+export enum EventType {
   CREATE = 'create',
   EDIT = 'edit',
 }

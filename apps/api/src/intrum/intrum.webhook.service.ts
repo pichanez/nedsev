@@ -1,18 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { StockWebHookRequest } from './interfaces/webhook/intrum.webhook.interface';
+import {
+  StockWebHookRequest,
+  WebHookMerge,
+} from './interfaces/webhook/intrum.webhook.interface';
 import { plainToClass } from 'class-transformer';
-import { processExtProperties } from './intrum.utils';
+import { pickProperties, processExtProperties } from './intrum.utils';
 
 @Injectable()
 export class IntrumWebHookService {
   constructor() {}
 
-  prepareStockWebHook(request: object): StockWebHookRequest {
+  prepareStockWebHook(request: object): [StockWebHookRequest, WebHookMerge[]] {
     const result = plainToClass(StockWebHookRequest, request);
+    let merge = result.snapshot.merge;
 
     processExtProperties(result.snapshot.extproperty);
-    processExtProperties(result.snapshot.merge);
+    processExtProperties(merge);
 
-    return result;
+    return [result, merge];
   }
 }
