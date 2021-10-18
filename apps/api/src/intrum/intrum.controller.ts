@@ -4,6 +4,7 @@ import { StockTransformerFactory } from './intrum.transformer.service';
 import { IntrumWebHookService } from './intrum.webhook.service';
 import { NotificationService } from '../notification/notification.service';
 import { StockWebHookRequest } from './interfaces/webhook/intrum.webhook.interface';
+import { Stock } from './interfaces/stock';
 
 @Controller('intrum')
 export class IntrumController {
@@ -14,13 +15,20 @@ export class IntrumController {
 
   @Post('stock')
   stock(@Body() request: StockWebHookRequest) {
+    let stock: Stock;
     const stockTransformer = new StockTransformerFactory();
-    console.log(request);
+
     const webHook = this.webhook.prepareStockWebHook(request);
-    const stock = stockTransformer.get(webHook).format();
+
+    try {
+      stock = stockTransformer.get(webHook).format();
+    } catch (error) {
+      return; // TODO: Fix
+    }
 
     const merge = webHook.snapshot.merge;
-    const message = this.notify.newStock(stock, merge);
+
+    this.notify.newStock(stock, merge);
 
     return { message: stock };
   }

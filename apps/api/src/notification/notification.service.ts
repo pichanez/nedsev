@@ -3,7 +3,6 @@ import { TelegramService } from './platform/telegram.service';
 import { Stock } from '../intrum/interfaces/stock';
 import { StockMessageBuilder } from './notification.builder';
 import { IntrumService } from '../intrum/intrum.service';
-import { map, retry, skip } from 'rxjs/operators';
 import { WebHookMerge } from '../intrum/interfaces/webhook/intrum.webhook.interface';
 
 @Injectable()
