@@ -46,7 +46,7 @@ export class IntrumController {
 
     if (stockProperties.status in merge) {
       // TODO: Move status to common properties
-      switch (stock.properties.status) {
+      switch (stock.status) {
         case ACTIVE:
           type = WebHookType.NEW;
           break;

@@ -1,6 +1,8 @@
 import { ExtProperties } from './extProperties';
+import { FlatStatuses } from '../../../app/constants';
 
 export interface Stock {
+  status: FlatStatuses;
   externalId: number;
   creationDate: Date;
   updatedDate: Date;
