@@ -59,7 +59,10 @@ export class StockMessageBuilder {
 
   private produceSaleTitle(): void {
     this.message.content +=
-      '✅ В продаже ' + this.formatter.getCategory() + this.getAddress();
+      '✅ В продаже ' +
+      this.formatter.getCategory() +
+      this.getAddress() +
+      '\n\n';
   }
 
   public produceSalePrepaymentTitle(): void {
@@ -78,12 +81,12 @@ export class StockMessageBuilder {
 
   private produceRentTitle(): void {
     this.message.content +=
-      '📮 Сдаётся ' + this.formatter.getCategory() + this.getAddress();
+      '📮 Сдаётся ' + this.formatter.getCategory() + this.getAddress() + '\n\n';
   }
 
   private getAddress(): string {
     const { street, house } = this.stock;
-    return ` по адресу ${street}, ${house}\n\n`;
+    return ` по адресу ${street}, ${house}`;
   }
 
   public producePrice(): void {
