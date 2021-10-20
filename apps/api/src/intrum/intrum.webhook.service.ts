@@ -10,12 +10,19 @@ import { pickProperties, processExtProperties } from './intrum.utils';
 export class IntrumWebHookService {
   constructor() {}
 
-  prepareStockWebHook(request: object): [StockWebHookRequest, WebHookMerge[]] {
+  prepareStockWebHook(
+    request: object
+  ): [StockWebHookRequest, WebHookMerge[] | {}] {
     const result = plainToClass(StockWebHookRequest, request);
-    let merge = result.snapshot.merge;
+    let merge: WebHookMerge[] | {};
+    try {
+      merge = result.snapshot.merge;
+      processExtProperties(merge);
+    } catch (error) {
+      merge = {};
+    }
 
     processExtProperties(result.snapshot.extproperty);
-    processExtProperties(merge);
 
     return [result, merge];
   }
